@@ -13,4 +13,15 @@ module.exports = (app) => {
     .put(app.src.controllers.userControllers.save)
     .get(app.src.controllers.userControllers.getById)
     .delete(app.src.controllers.userControllers.remove);
+
+  app
+    .route("/task")
+    .all(app.src.config.passport.authenticate())
+    .post(app.src.controllers.taskControllers.save)
+    .get(app.src.controllers.taskControllers.getAllTask);
+
+  app
+    .route("/task/:id")
+    .all(app.src.config.passport.authenticate())
+    .get(app.src.controllers.taskControllers.getById);
 };

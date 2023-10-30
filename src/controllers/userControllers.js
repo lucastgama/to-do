@@ -43,8 +43,8 @@ module.exports = (app) => {
         .catch((err) => res.status(500).send(err));
     }
   };
+  
   const getAllUser = (req, res) => {
-    console.log(req.user)
     app
       .db("users")
       .select("id", "name", "email")
