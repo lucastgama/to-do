@@ -65,5 +65,23 @@ module.exports = (app) => {
       .catch((err) => res.status(500).send(err));
   };
 
-  return { save, getAllTask, getById };
+  const deleteTask = (req, res) => {
+    const taskId = req.params.id;
+    const userId = req.user.id;
+
+    // TODO: adicinar admin no user para que assim possa excluir usuarios do banco
+
+    app
+      .db("task")
+      .where({ id: taskId, userId: userId })
+      .delete()
+      .then((_) => {
+        res.status(204).send();
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  };
+
+  return { save, getAllTask, getById, deleteTask };
 };

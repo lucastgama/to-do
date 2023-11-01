@@ -10,9 +10,10 @@ module.exports = (app) => {
 
   app
     .route("/users/:id")
+    .all(app.src.config.passport.authenticate())
     .put(app.src.controllers.userControllers.save)
     .get(app.src.controllers.userControllers.getById)
-    .delete(app.src.controllers.userControllers.remove);
+    .delete(app.src.controllers.userControllers.deleteUser);
 
   app
     .route("/task")
@@ -23,5 +24,6 @@ module.exports = (app) => {
   app
     .route("/task/:id")
     .all(app.src.config.passport.authenticate())
-    .get(app.src.controllers.taskControllers.getById);
+    .get(app.src.controllers.taskControllers.getById)
+    .delete(app.src.controllers.taskControllers.deleteTask);
 };

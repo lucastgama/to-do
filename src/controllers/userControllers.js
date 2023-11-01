@@ -43,7 +43,7 @@ module.exports = (app) => {
         .catch((err) => res.status(500).send(err));
     }
   };
-  
+
   const getAllUser = (req, res) => {
     app
       .db("users")
@@ -63,9 +63,20 @@ module.exports = (app) => {
       .catch((err) => res.status(500).send(err));
   };
 
-  const remove = (req, res) => {
+  const deleteUser = (req, res) => {
     const user = req.params.id;
+    // TODO: adicinar admin no user para que assim possa excluir usuarios do banco
+    app
+      .db("users")
+      .where({ id: user })
+      .delete()
+      .then((_) => {
+        res.status(204).send();
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
   };
 
-  return { save, getAllUser, getById, remove };
+  return { save, getAllUser, getById, deleteUser };
 };
